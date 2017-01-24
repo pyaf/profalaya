@@ -29,6 +29,8 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
+    'professor_info',
+    'etc',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
