@@ -5,8 +5,8 @@ from django.core.validators import URLValidator
 
 
 class College(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=500)
+    college_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=500, unique=True)
     address = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -28,7 +28,8 @@ class ResearchWork(models.Model):
         return "%s" %(self.link)
 
 class Department(models.Model):
-    name = models.CharField(max_length=250)
+    department_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=250, unique=True)
 
     def __str__(self):
         return "%s" %(self.name)
@@ -39,13 +40,13 @@ class Professor(models.Model):
     email = models.TextField(null=True, blank = True)
     designation = models.CharField(max_length=250, null=True, blank=True)
     department = models.ForeignKey(Department)
-    college = models.OneToOneField(College)
+    college = models.ForeignKey(College)
     phone = models.TextField(null=True, blank=True)
     area_of_interest = models.TextField(null=True, blank=True)
-    research_work = models.ForeignKey(ResearchWork)
+    research_work = models.ForeignKey(ResearchWork, null=True, blank=True)
     profile_link = models.URLField(null=True, blank=True)
     display_picture = models.TextField(validators=[URLValidator()],blank=True)
     short_description = models.TextField(null=True, blank=True)
-    
+
     def __str__(self):
         return "%s-%s" %(self.name, self.college)
