@@ -34,6 +34,7 @@ class Department(models.Model):
         return "%s" %(self.name)
 
 class Professor(models.Model):
+    professor_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250)
     email = models.TextField(null=True, blank = True)
     designation = models.CharField(max_length=250, null=True, blank=True)
@@ -45,5 +46,6 @@ class Professor(models.Model):
     profile_link = models.URLField(null=True, blank=True)
     display_picture = models.TextField(validators=[URLValidator()],blank=True)
     short_description = models.TextField(null=True, blank=True)
+    
     def __str__(self):
         return "%s-%s" %(self.name, self.college)

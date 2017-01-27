@@ -6,12 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <!-- <link rel="icon" href="#"> -->
 
-    <title>Rofinfo</title>
+    <title>Profalaya</title>
 
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-
 
     <link href="/static/css/cover.css" rel="stylesheet">
 
@@ -43,16 +42,14 @@
             <h1 class="cover-heading">Worried about Research Internship in India?</h1>
             <p class="lead"> Search Professor Name, Research Topic, Project Topic and see the magic!</p>
 
-            <form class="form-inline">
+            <form class="form-inline" id="search_form">
               <div class="form-group">
-                <input type="text" class="form-control" id="" placeholder="" style="width: 550px;">
+                <input type="text" class="form-control" id="search_query" placeholder="" size="50">
               </div>
               <button type="submit" class="btn btn-default">Search</button>
             </form>
           </div>
           <div id="search_results" class="inner">
-
-
           </div>
 
           <div class="mastfoot">
@@ -69,9 +66,38 @@
     <script src="/static/js/jquery.min.js" charset="utf-8"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-      $(document).ready(function() {
 
-      });
+    $('#search_form').on('submit', function(event){
+        event.preventDefault();
+        console.log("clicked");
+        var val = $("#search_query").val();
+        console.log(val);
+
+
+        $.ajax({
+          url: 'search_query/',
+          type: 'POST',
+          dataType: 'json',
+          data: {
+          'search_query': val,
+          'csrfmiddlewaretoken': '{{ csrf_token }}', },
+          success: function(data) {
+            console.log(data);
+           }
+        })
+        .done(function() {
+          console.log("success");
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+
+            });
+
+
     </script>
   </body>
 </html>
