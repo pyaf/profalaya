@@ -2,6 +2,7 @@ import csv
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 path = os.path.join(BASE_DIR, 'data/done/iitbhu_prof_data.csv')
+print(path, BASE_DIR)
 from professor_info.models import *
 
 def run():
