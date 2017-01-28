@@ -20,7 +20,7 @@ research_types = [
 
 class ResearchWork(models.Model):
     research_type = models.CharField(choices=research_types, max_length=250, null=True, blank=True)
-    topic = models.TextField()
+    topic = models.TextField(null=True,blank=True)
     link = models.URLField(null=True, blank=True)
 
     def __str__(self):
