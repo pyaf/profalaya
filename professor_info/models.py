@@ -5,7 +5,7 @@ from django.core.validators import URLValidator
 
 
 class College(models.Model):
-    college_id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=500, unique=True)
     address = models.TextField(null=True, blank=True)
 
@@ -28,14 +28,14 @@ class ResearchWork(models.Model):
         return "%s" %(self.link)
 
 class Department(models.Model):
-    department_id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250, unique=True)
 
     def __str__(self):
         return "%s" %(self.name)
 
 class Professor(models.Model):
-    professor_id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250)
     email = models.TextField(null=True, blank = True)
     designation = models.CharField(max_length=250, null=True, blank=True)
