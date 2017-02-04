@@ -46,4 +46,20 @@ class Professor(models.Model):
     short_description = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return "%s-%s" %(self.name, self.college)
+        return "%s" %(self.name)
+
+
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "name":self.name,
+            "email":self.email,
+            "designation":self.designation,
+            "department":self.department.name,
+            "college":self.college.name,
+            "phone":self.phone,
+            "area_of_interest":self.area_of_interest,
+            "profile_link":self.profile_link,
+            "display_picture":self.display_picture,
+
+            }

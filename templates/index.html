@@ -13,7 +13,83 @@
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="/static/css/cover.css" rel="stylesheet">
+    <style>
+    /*body {
+        padding: 20px;
+        font-family: 'Open Sans', sans-serif;
+        background-color: #f7f7f7;
+    }*/
 
+    .lib-panel {
+        margin-bottom: 20Px;
+    }
+    .lib-panel img {
+        width: 100%;
+        background-color: transparent;
+    }
+
+    .lib-panel .row,
+    .lib-panel .col-md-6 {
+        padding: 0;
+        background-color: #FFFFFF;
+    }
+
+
+    .lib-panel .lib-row {
+        padding: 0 20px 0 20px;
+    }
+
+    .lib-panel .lib-row.lib-header {
+        background-color: #FFFFFF;
+        font-size: 20px;
+        padding: 10px 20px 0 20px;
+    }
+
+    .lib-panel .lib-row.lib-header .lib-header-seperator {
+        height: 2px;
+        width: 26px;
+        background-color: #d9d9d9;
+        margin: 7px 0 7px 0;
+    }
+
+    .lib-panel .lib-row.lib-desc {
+        position: relative;
+        height: 100%;
+        display: block;
+        font-size: 13px;
+    }
+    .lib-panel .lib-row.lib-desc a{
+        position: absolute;
+        width: 100%;
+        bottom: 10px;
+        left: 20px;
+    }
+
+    .row-margin-bottom {
+        margin-bottom: 20px;
+    }
+
+    .box-shadow {
+        -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
+        box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
+    }
+
+    .no-padding {
+        padding: 0;
+    }
+    .thumbnail {
+      background: transparent;
+    }
+    img {
+background: transparent;
+
+  width: 150px;
+  object-fit: cover;
+  /*height: 50px;*/
+
+}
+
+    </style>
 
   </head>
 
@@ -44,13 +120,76 @@
 
             <form class="form-inline" id="search_form">
               <div class="form-group">
-                <input type="text" class="form-control" id="search_query" placeholder="" size="50">
+                <input type="text" class="form-control" id="search_query" required="true" placeholder="" size="50">
               </div>
               <button type="submit" class="btn btn-default">Search</button>
             </form>
           </div>
-          <div id="search_results" class="inner">
-          </div>
+
+          <br>
+          <br>
+            <div id="result_section">
+
+              <div id="result_card" style="border:2px solid white;margin:1%;display:none">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <a  class="thumbnail" style="margin:5%" >
+                      <img id="prof_dp" class="img-responsive" src="/static/images/img_loading.gif" />
+                    </a>
+                  </div>
+                  <div class="col-sm-8">
+                    <h3 id="prof_name"></h3>
+                    <h5 id="designation_department"></h5>
+                    <em id="college_name"></em>
+                    <br>
+                    <br>
+                    <button id="know_more" type="button" class="btn btn-default" name="button" onclick="openModal(this)">Know More <i class="glyphicon glyphicon-education"></i></button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content" style="background:#333">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                              <h4 class="modal-title" id="myModalLabel">Professor Name</h4>
+                              </div>
+                          <div class="modal-body">
+                              <center>
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <img src="/static/images/img_loading.gif" class="img-responsive"></a>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <h3 class="media-heading">Joe Sixpack <small>USA</small></h3>
+                                    <span><strong>Skills: </strong></span>
+                                    <span class="label label-warning">HTML5/CSS</span>
+                                    <span class="label label-info">Adobe CS 5.5</span>
+                                    <span class="label label-info">Microsoft Office</span>
+                                    <span class="label label-success">Windows XP, Vista, 7</span>
+
+                                  </div>
+                                </div>
+                              </center>
+                              <hr>
+                              <center>
+                              <p class="text-left"><strong>Bio: </strong><br>
+                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sem dui, tempor sit amet commodo a, vulputate vel tellus.</p>
+                              <br>
+                              </center>
+                          </div>
+                          <div class="modal-footer">
+                              <center>
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              </center>
+                          </div>
+                      </div>
+                  </div>
+              </div>
 
           <div class="mastfoot">
             <div class="inner">
@@ -66,13 +205,29 @@
     <script src="/static/js/jquery.min.js" charset="utf-8"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+// http://www.iitbhu.ac.in/mst/index.php/people/img8.jp
+
+    var image = document.images[0];
+    var downloadingImage = new Image();
+    downloadingImage.onload = function(){
+      image.src = this.src;
+    };
+    downloadingImage.onerror = function(){
+
+    console.log("BC img load nhi hui!");
+  }
+    downloadingImage.src = " http://www.iitbhu.ac.in/mst/index.php/people/img8.jp";
+
+    function openModal(){
+    console.log("button clicked");
+    $("#myModal").modal("show");
+      }
 
     $('#search_form').on('submit', function(event){
         event.preventDefault();
-        console.log("clicked");
+        // console.log("clicked");
         var val = $("#search_query").val();
-        console.log(val);
-
+        // console.log(val);
 
         $.ajax({
           url: 'search_query/',
@@ -82,17 +237,47 @@
           'search_query': val,
           'csrfmiddlewaretoken': '{{ csrf_token }}', },
           success: function(data) {
-            console.log(data);
+            // console.log(data);
+            prof_data = JSON.parse(data['results'])
+            count = data['result_count'];
+            for (i = 0; i<count; i++){
+              console.log("loop", i);
+              // console.log(prof_data[i]);
+              var card_data = prof_data[i];
+              var name = card_data['name'];
+              var college = card_data['college'];
+              var department = card_data['department'];
+              var designation = card_data['designation'];
+              var display_picture = card_data['display_picture'];
+              var email = card_data['email'];
+              var profile_link = card_data['profile_link'];
+              var phone = card_data['phone'];
+              var area_of_interest = card_data['area_of_interest'];
+              console.log(name,college, department, display_picture,email, profile_link,phone, area_of_interest);
+              // .appendTo('#result_section');
+              var new_card = $('#result_card').clone().prop({ id: "result_card"+String(i)});
+              jQuery(new_card).find("img").prop({id:"prof_dp"+String(i), src: display_picture});
+              jQuery(new_card).find("h3").prop({id:"prof_name"+String(i), innerHTML: name});
+              jQuery(new_card).find("h5").prop({id:"designation_department"+String(i), innerHTML: designation + ", " + department});
+              jQuery(new_card).find("em").prop({id:"college_name"+String(i), innerHTML: college});
+
+
+              console.log(new_card.html());
+              new_card.css("display","block");
+              new_card.appendTo('#result_section');
+            }
+
            }
+
         })
         .done(function() {
-          console.log("success");
+          // console.log("success");
         })
         .fail(function() {
-          console.log("error");
+          // console.log("error");
         })
         .always(function() {
-          console.log("complete");
+          // console.log("complete");
         });
 
             });

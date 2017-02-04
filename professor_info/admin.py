@@ -9,7 +9,9 @@ class ProfessorAdmin(admin.ModelAdmin):
     # readonly_fields=('id',)
     def profile_link(obj):
         return format_html('<a href="%s" target="_blank">Profile Link</a>' %obj.profile_link,)
-    list_display = ('id', 'name', 'college',profile_link)
+
+    search_fields = ('name', 'college','id')
+    list_display = ('id', 'name', 'college','department',profile_link)
 
 class CollegeAdmin(admin.ModelAdmin):
 
@@ -19,7 +21,7 @@ class CollegeAdmin(admin.ModelAdmin):
     list_display = ('id','name', 'address')
     ordering = ('name','address')
     readonly_fields=('id',)
-    # search_fields = ('collegeName','collegeId')
+    search_fields = ('name','id')
 
 # admin.site.unregister(User)
 # admin.site.unregister(Group)

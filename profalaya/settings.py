@@ -25,13 +25,13 @@ SECRET_KEY = "azc3h2bwkar*ddvo6r38uv6-#8g*4_-f4gg-6_kg_ii63^=((+"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 # Application definition
 
 INSTALLED_APPS = [
     'professor_info',
     'etc',
     'django_extensions',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,9 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'profalaya.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
     'default': {
