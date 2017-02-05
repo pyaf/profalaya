@@ -10,6 +10,8 @@ class ProfessorAdmin(admin.ModelAdmin):
     def profile_link(obj):
         return format_html('<a href="%s" target="_blank">Profile Link</a>' %obj.profile_link,)
 
+    list_max_show_all = 300
+    ordering = ('id',)
     search_fields = ('name', 'college','id')
     list_display = ('id', 'name', 'college','department',profile_link)
 

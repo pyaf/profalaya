@@ -262,7 +262,7 @@ background: transparent;
               // console.log(name,college, department, display_picture,email, profile_link,phone, area_of_interest);
               // .appendTo('#result_section');
               var new_card = $('#result_card').clone().prop({ id: "result_card"+String(i)});
-              jQuery(new_card).find("img").prop({id:"prof_dp"+String(i), src: '/static/images/img_loading.gif'});
+              jQuery(new_card).find("img").prop({id:"prof_dp"+String(i), src: '/static/images/na.png'});
               jQuery(new_card).find("h3").prop({id:"prof_name"+String(i), innerHTML: name});
               jQuery(new_card).find("h5").prop({id:"designation_department"+String(i), innerHTML: designation + ", " + department});
               jQuery(new_card).find("em").prop({id:"college_name"+String(i), innerHTML: college});

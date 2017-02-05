@@ -45,8 +45,8 @@ def search_query(request):
     response_data = {}
     if request.method == "POST":
         query = request.POST['search_query'].strip()
-        print('\n\nquery', query)
         #brute force check if there something in the query with same
+
         exact_match_result = Professor.objects.filter(area_of_interest__icontains=query)
         qset = Q()
         for term in query.split():
@@ -55,17 +55,13 @@ def search_query(request):
         id_to_exclude = [obj.id for obj in exact_match_result]
         subset_match_result = Professor.objects.filter(qset).exclude(id__in=id_to_exclude)
 
-        # data = serializers.serialize("json", profs, fields=('name', 'area_of_interest'))
-
         data = [prof.as_dict() for prof in exact_match_result]
         data += [prof.as_dict() for prof in subset_match_result]
-        # data = [dict(t) for t in set([tuple(d.items()) for d in data])]
 
-        # print(data)
-        data_count = subset_match_result.count()
+        data_count = len(data)
         data = json.dumps(data)
 
-        # print(data)
+        print(data_count)
 
         response_data['result_count'] = data_count
         response_data['results'] = data
