@@ -130,24 +130,25 @@ background: transparent;
           <br>
             <div id="result_section">
 
-              <div id="result_card" style="border:2px solid white;margin:1%;display:none">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <a  class="thumbnail" style="margin:5%" >
-                      <img id="prof_dp" class="img-responsive" src="/static/images/img_loading.gif" />
-                    </a>
-                  </div>
-                  <div class="col-sm-8">
-                    <h3 id="prof_name"></h3>
-                    <h5 id="designation_department"></h5>
-                    <em id="college_name"></em>
-                    <br>
-                    <br>
-                    <button id="know_more" type="button" class="btn btn-default" name="button" onclick="openModal(this)">Know More <i class="glyphicon glyphicon-education"></i></button>
-                  </div>
+
+            </div>
+
+            <div id="result_card" style="border:2px solid white;margin:1%;display:none">
+              <div class="row">
+                <div class="col-sm-3">
+                  <a  class="thumbnail" style="margin:5%" >
+                    <img id="prof_dp" class="img-responsive" src="/static/images/img_loading.gif" />
+                  </a>
+                </div>
+                <div class="col-sm-8">
+                  <h3 id="prof_name"></h3>
+                  <h5 id="designation_department"></h5>
+                  <em id="college_name"></em>
+                  <br>
+                  <br>
+                  <button id="know_more" type="button" class="btn btn-default" name="button" onclick="openModal(this)">Know More <i class="glyphicon glyphicon-education"></i></button>
                 </div>
               </div>
-
             </div>
 
               <!-- Modal -->
@@ -207,24 +208,28 @@ background: transparent;
     <script type="text/javascript">
 // http://www.iitbhu.ac.in/mst/index.php/people/img8.jp
 
-    var image = document.images[0];
-    var downloadingImage = new Image();
-    downloadingImage.onload = function(){
-      image.src = this.src;
-    };
-    downloadingImage.onerror = function(){
-
-    console.log("BC img load nhi hui!");
-  }
-    downloadingImage.src = " http://www.iitbhu.ac.in/mst/index.php/people/img8.jp";
 
     function openModal(){
     console.log("button clicked");
     $("#myModal").modal("show");
       }
 
+
+    function load_img(){
+      var downloadingImage = new Image();
+      downloadingImage.onload = function(){
+
+      };
+      downloadingImage.onerror = function(){
+        console.log("BC img load nhi hui!");
+        img_srcs.push("#");
+      }
+      downloadingImage.src = display_picture;
+
+    }
     $('#search_form').on('submit', function(event){
         event.preventDefault();
+        $("#result_section").empty();
         // console.log("clicked");
         var val = $("#search_query").val();
         // console.log(val);
@@ -240,8 +245,9 @@ background: transparent;
             // console.log(data);
             prof_data = JSON.parse(data['results'])
             count = data['result_count'];
+            var img_srcs = [];
             for (i = 0; i<count; i++){
-              console.log("loop", i);
+              // console.log("loop", i);
               // console.log(prof_data[i]);
               var card_data = prof_data[i];
               var name = card_data['name'];
@@ -253,20 +259,24 @@ background: transparent;
               var profile_link = card_data['profile_link'];
               var phone = card_data['phone'];
               var area_of_interest = card_data['area_of_interest'];
-              console.log(name,college, department, display_picture,email, profile_link,phone, area_of_interest);
+              // console.log(name,college, department, display_picture,email, profile_link,phone, area_of_interest);
               // .appendTo('#result_section');
               var new_card = $('#result_card').clone().prop({ id: "result_card"+String(i)});
-              jQuery(new_card).find("img").prop({id:"prof_dp"+String(i), src: display_picture});
+              jQuery(new_card).find("img").prop({id:"prof_dp"+String(i), src: '/static/images/img_loading.gif'});
               jQuery(new_card).find("h3").prop({id:"prof_name"+String(i), innerHTML: name});
               jQuery(new_card).find("h5").prop({id:"designation_department"+String(i), innerHTML: designation + ", " + department});
               jQuery(new_card).find("em").prop({id:"college_name"+String(i), innerHTML: college});
 
-
-              console.log(new_card.html());
+              img_srcs.push(display_picture);
               new_card.css("display","block");
               new_card.appendTo('#result_section');
-            }
+              $(".masthead").css("position","relative");
+              $(".mastfoot").css("position","relative");
 
+            }
+            // console.log(img_srcs)
+            console.log(img_srcs);
+                  preload(img_srcs);
            }
 
         })
@@ -281,6 +291,20 @@ background: transparent;
         });
 
             });
+            function preload(arrayOfImages) {
+              // console.log(arrayOfImages);
+            for (x=0; x<arrayOfImages.length; x++){
+
+              if(arrayOfImages[x]!=""){
+                $("#prof_dp"+String(x)).css('background-color','white');
+                $("#prof_dp"+String(x)).attr("src",arrayOfImages[x]);
+              }
+
+            }
+      }
+
+      // Usage:
+
 
 
     </script>
