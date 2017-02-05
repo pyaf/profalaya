@@ -152,35 +152,35 @@ background: transparent;
             </div>
 
               <!-- Modal -->
+              <div class="" id="modal_section">
               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
+                  <div class="modal-admin" style="width: 80%; padding-left: 20%;padding-top: 3%;">
                       <div class="modal-content" style="background:#333">
                           <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                              <h4 class="modal-title" id="myModalLabel">Professor Name</h4>
+                              <h4 class="modal-title" id="myModalLabel">Professor Detail</h4>
                               </div>
                           <div class="modal-body">
                               <center>
                                 <div class="row">
                                   <div class="col-sm-4">
-                                    <img src="/static/images/img_loading.gif" class="img-responsive"></a>
+                                    <img id="modal_img"src="/static/images/img_loading.gif" class="img-responsive"></a>
                                   </div>
                                   <div class="col-sm-7">
-                                    <h3 class="media-heading">Joe Sixpack <small>USA</small></h3>
-                                    <span><strong>Skills: </strong></span>
-                                    <span class="label label-warning">HTML5/CSS</span>
-                                    <span class="label label-info">Adobe CS 5.5</span>
-                                    <span class="label label-info">Microsoft Office</span>
-                                    <span class="label label-success">Windows XP, Vista, 7</span>
-
+                                    <h3 id="modal_prof_name"class="media-heading"></h3>
+                                    <h5 id="designation_department"></h5>
+                                    <em id="college_name"></em>
+                                    <br> <br>
+                                    <p id="prof_email" >
+                                    </p>
                                   </div>
                                 </div>
                               </center>
                               <hr>
                               <center>
-                              <p class="text-left"><strong>Bio: </strong><br>
-                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sem dui, tempor sit amet commodo a, vulputate vel tellus.</p>
+                              <p id="prof_area_of_interest" class="text-left"></p>
                               <br>
+                              <p id="prof_profile_link" class="text-left"></p>
                               </center>
                           </div>
                           <div class="modal-footer">
@@ -191,6 +191,7 @@ background: transparent;
                       </div>
                   </div>
               </div>
+            </div>
 
           <div class="mastfoot">
             <div class="inner">
@@ -208,10 +209,27 @@ background: transparent;
     <script type="text/javascript">
 // http://www.iitbhu.ac.in/mst/index.php/people/img8.jp
 
+    var prof_data; //global variable
 
-    function openModal(){
-    console.log("button clicked");
-    $("#myModal").modal("show");
+    function openModal(elem){
+    // console.log("button clicked");
+      var index_of_prof_in_prof_data = elem.id.slice(9);
+      var prof = prof_data[index_of_prof_in_prof_data]
+      console.log(prof);
+      jQuery($("#myModal")).find("img").prop({src: prof['display_picture']});
+      jQuery($("#myModal")).find("#modal_prof_name").prop({innerHTML: prof['name']});
+      jQuery($("#myModal")).find("#prof_area_of_interest").prop({innerHTML: "<strong>Aria of interest: </strong><br>" + prof['area_of_interest']});
+      jQuery($("#myModal")).find("#designation_department").prop({innerHTML: prof['designation']+", "+prof['department']});
+      jQuery($("#myModal")).find("#college_name").prop({innerHTML : prof['college']});
+      jQuery($("#myModal")).find("#prof_area_of_interest").prop({innerHTML: "<strong>Aria of interest: </strong><br>" + prof['area_of_interest']});
+      jQuery($("#myModal")).find("#prof_email").prop({innerHTML: "<strong> Email: </strong> " + prof['email']});
+      jQuery($("#myModal")).find("#prof_profile_link").prop({innerHTML: "<strong> Profile link: </strong><br>" + "<a href="+prof['profile_link']+ ' target="_blank" >Visit Profile</a>'});
+
+
+
+prof_email
+      $("#myModal").modal("show");
+
       }
 
 
@@ -250,6 +268,7 @@ background: transparent;
               // console.log("loop", i);
               // console.log(prof_data[i]);
               var card_data = prof_data[i];
+              var id = card_data['id'];
               var name = card_data['name'];
               var college = card_data['college'];
               var department = card_data['department'];
@@ -266,16 +285,27 @@ background: transparent;
               jQuery(new_card).find("h3").prop({id:"prof_name"+String(i), innerHTML: name});
               jQuery(new_card).find("h5").prop({id:"designation_department"+String(i), innerHTML: designation + ", " + department});
               jQuery(new_card).find("em").prop({id:"college_name"+String(i), innerHTML: college});
+              var index_of_prof_in_prof_data = prof_data.indexOf(card_data)
+              jQuery(new_card).find("button").prop({id:"know_more"+index_of_prof_in_prof_data});
+
 
               img_srcs.push(display_picture);
               new_card.css("display","block");
               new_card.appendTo('#result_section');
+
+
+              // var new_modal = $("#myModal").clone().prop({id: "myModal"+String(i)})
+              // jQuery(new_modal).find("modal_prof_name").prop({id:"modal_prof_name"+String(i), innerHTML:name});
+              // jQuery(new_modal).find("modal_img").prop({id:"modal_img"+String(i), src:display_picture});
+              //
+              // new_modal.appendTo('#modal_section');
+
               $(".masthead").css("position","relative");
               $(".mastfoot").css("position","relative");
 
             }
             // console.log(img_srcs)
-            console.log(img_srcs);
+            // console.log(img_srcs);
                   preload(img_srcs);
            }
 
